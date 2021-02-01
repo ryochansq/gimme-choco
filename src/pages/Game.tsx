@@ -14,7 +14,10 @@ const useStyles = makeStyles(() =>
   })
 )
 
-const Game: React.FC<GameProps> = ({ setViewState, setScore }: GameProps) => {
+export const Game: React.FC<GameProps> = ({
+  setViewState,
+  setScore,
+}: GameProps) => {
   const classes = useStyles()
   const [canvasRef, onClickLeft, onClickRight] = useGame({
     setViewState,
@@ -43,5 +46,3 @@ const Game: React.FC<GameProps> = ({ setViewState, setScore }: GameProps) => {
     </div>
   )
 }
-
-export default Game

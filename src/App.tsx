@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-import Top from 'pages/Top'
-import Game from 'pages/Game'
-import Result from 'pages/Result'
+import { Top } from 'pages/Topp'
+import { Game } from 'pages/Game'
+import { Result } from 'pages/Result'
 
 const theme = createMuiTheme({
   palette: {

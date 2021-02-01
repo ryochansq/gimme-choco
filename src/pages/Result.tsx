@@ -12,7 +12,7 @@ const useStyles = makeStyles(() =>
   })
 )
 
-const Result: React.FC<ResultProps> = ({
+export const Result: React.FC<ResultProps> = ({
   setViewState,
   score,
 }: ResultProps) => {
@@ -34,5 +34,3 @@ const Result: React.FC<ResultProps> = ({
     </div>
   )
 }
-
-export default Result

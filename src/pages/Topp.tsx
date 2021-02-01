@@ -8,7 +8,7 @@ const useStyles = makeStyles(() =>
   })
 )
 
-const Top: React.FC<Props> = ({ setViewState }: Props) => {
+export const Top: React.FC<Props> = ({ setViewState }: Props) => {
   const classes = useStyles()
 
   return (
@@ -29,5 +29,3 @@ const Top: React.FC<Props> = ({ setViewState }: Props) => {
     </div>
   )
 }
-
-export default Top
