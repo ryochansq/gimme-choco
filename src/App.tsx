@@ -1,35 +1,71 @@
 import React, { useState } from 'react'
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
+import {
+  AppBar,
+  Container,
+  createMuiTheme,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+} from '@material-ui/core'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-type Mode = 'Top' | 'Game' | 'Result'
+import Top from 'pages/top'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#8a0036',
+    },
+  },
+})
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      backgroundColor: '#feb',
+      height: '100vh',
+      minHeight: '100vh',
+    },
+    body: {},
+  })
+)
 
 const App: React.FC = () => {
-  const [mode, setMode] = useState<Mode>('Top')
+  const [viewState, setViewState] = useState<ViewState>('Top')
+  const classes = useStyles()
 
-  const onClickStart = () => {
-    const setModeFunc = (currentMode: Mode) => {
-      if (currentMode === 'Top') return 'Game'
-      else if (currentMode === 'Game') return 'Result'
-      else return 'Top'
-    }
-    setMode(setModeFunc)
-  }
+  // const onClickStart = () => {
+  //   const setModeFunc = (currentMode: ViewState) => {
+  //     if (currentMode === 'Top') return 'Game'
+  //     else if (currentMode === 'Game') return 'Result'
+  //     else return 'Top'
+  //   }
+  //   setViewState(setModeFunc)
+  // }
 
   return (
-    <div className="App">
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit">
-            ギミチョコ
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      {mode === 'Top' && <p>とっぷ</p>}
-      {mode === 'Game' && <p>げーむ</p>}
-      {mode === 'Result' && <p>りざると</p>}
-      <Button variant="contained" color="primary" onClick={onClickStart}>
-        スタート！
-      </Button>
+    <div className={classes.root}>
+      <ThemeProvider theme={theme}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit">
+              ギミチョコもあちゃん
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth="xs" className={classes.body}>
+          {(() => {
+            switch (viewState) {
+              case 'Result':
+                return <div>りざると</div>
+              case 'Game':
+                return <div>げーむ</div>
+              default:
+                return <Top setViewState={setViewState} />
+            }
+          })()}
+        </Container>
+      </ThemeProvider>
     </div>
   )
 }
