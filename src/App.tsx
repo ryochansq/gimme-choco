@@ -9,7 +9,9 @@ import {
 } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-import Top from 'pages/top'
+import Top from 'pages/Top'
+import Game from 'pages/Game'
+import Result from 'pages/Result'
 
 const theme = createMuiTheme({
   palette: {
@@ -32,16 +34,8 @@ const useStyles = makeStyles(() =>
 
 const App: React.FC = () => {
   const [viewState, setViewState] = useState<ViewState>('Top')
+  const [score, setScore] = useState(0)
   const classes = useStyles()
-
-  // const onClickStart = () => {
-  //   const setModeFunc = (currentMode: ViewState) => {
-  //     if (currentMode === 'Top') return 'Game'
-  //     else if (currentMode === 'Game') return 'Result'
-  //     else return 'Top'
-  //   }
-  //   setViewState(setModeFunc)
-  // }
 
   return (
     <div className={classes.root}>
@@ -57,9 +51,9 @@ const App: React.FC = () => {
           {(() => {
             switch (viewState) {
               case 'Result':
-                return <div>りざると</div>
+                return <Result setViewState={setViewState} score={score} />
               case 'Game':
-                return <div>げーむ</div>
+                return <Game setViewState={setViewState} setScore={setScore} />
               default:
                 return <Top setViewState={setViewState} />
             }
