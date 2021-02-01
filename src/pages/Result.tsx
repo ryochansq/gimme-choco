@@ -26,7 +26,7 @@ const Result: React.FC<ResultProps> = ({
       <Button
         variant="contained"
         color="primary"
-        onClick={() => setViewState('Game')}
+        onClick={() => setViewState('Top')}
         className={classes.button}
       >
         もういちど遊ぶ！
