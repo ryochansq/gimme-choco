@@ -28,7 +28,9 @@ const useStyles = makeStyles(() =>
       height: '100vh',
       minHeight: '100vh',
     },
-    body: {},
+    body: {
+      padding: 0,
+    },
   })
 )
 
@@ -53,7 +55,13 @@ const App: React.FC = () => {
               case 'Result':
                 return <Result setViewState={setViewState} score={score} />
               case 'Game':
-                return <Game setViewState={setViewState} setScore={setScore} />
+                return (
+                  <Game
+                    setViewState={setViewState}
+                    score={score}
+                    setScore={setScore}
+                  />
+                )
               default:
                 return <Top setViewState={setViewState} />
             }

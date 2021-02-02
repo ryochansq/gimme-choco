@@ -1,12 +1,8 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Button } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import useGame from 'game/useGame'
-
-type GameProps = Props & {
-  setScore: React.Dispatch<React.SetStateAction<number>>
-}
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -16,21 +12,28 @@ const useStyles = makeStyles(() =>
 
 export const Game: React.FC<GameProps> = ({
   setViewState,
+  score,
   setScore,
 }: GameProps) => {
   const classes = useStyles()
-  const [canvasRef, onClickLeft, onClickRight] = useGame({
-    setViewState,
-    setScore,
-  })
+  const canvasRef = useRef(null)
+  const [init, onMouse] = useGame({ setViewState, score, setScore })
+  useEffect(() => {
+    const canvas = canvasRef.current
+    canvas && init(canvas)
+  }, [])
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <canvas className="canvas" ref={canvasRef} />
       <Button
         variant="contained"
         color="primary"
-        onClick={onClickLeft}
+        onMouseDown={() => onMouse('left', true)}
+        onMouseUp={() => onMouse('left', false)}
+        onMouseLeave={() => onMouse('left', false)}
+        onTouchStart={() => onMouse('left', true)}
+        onTouchEnd={() => onMouse('left', false)}
         className={classes.button}
       >
         ひだり
@@ -38,7 +41,11 @@ export const Game: React.FC<GameProps> = ({
       <Button
         variant="contained"
         color="primary"
-        onClick={onClickRight}
+        onMouseDown={() => onMouse('right', true)}
+        onMouseUp={() => onMouse('right', false)}
+        onMouseLeave={() => onMouse('right', false)}
+        onTouchStart={() => onMouse('right', true)}
+        onTouchEnd={() => onMouse('right', false)}
         className={classes.button}
       >
         みぎ
