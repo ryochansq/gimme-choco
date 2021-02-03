@@ -45,8 +45,8 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <AppBar position="static">
           <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit">
-              ギミチョコもあちゃん
+            <Typography variant="body1" color="inherit">
+              もあちゃんのギミチョコだいさくせん
             </Typography>
           </Toolbar>
         </AppBar>

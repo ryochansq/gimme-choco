@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 
-import { drawMoa } from 'game/draw'
+import { drawMoa, drawChoco } from 'game/draw'
 
 function useValueRef<T>(
   val: T
@@ -12,9 +12,6 @@ function useValueRef<T>(
   }, [v])
   return [ref, setV]
 }
-
-const moa = new Image()
-moa.src = '/moa.jpg'
 
 const useGame = ({
   setViewState,
@@ -28,11 +25,14 @@ const useGame = ({
   const [isLeft, setIsLeft] = useValueRef(false)
   const [isRight, setIsRight] = useValueRef(false)
   const [a, setA] = useValueRef(360)
+  const [te, setTe] = useValueRef(0)
 
   const draw = () => {
     if (!ctx) return
     ctx.clearRect(0, 0, a.current, a.current * 1.2)
     drawMoa(ctx, isLeft.current, isRight.current, a.current)
+    drawChoco(ctx, a.current, 0, te.current)
+    setTe((ct) => ct + 1)
   }
 
   const init = (canvas: HTMLCanvasElement) => {
