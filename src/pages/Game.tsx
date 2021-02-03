@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import useGame from 'game/useGame'
 
 const useStyles = makeStyles(() =>
   createStyles({
-    button: {},
+    button: {
+      fontSize: 28,
+    },
   })
 )
 
@@ -26,30 +28,44 @@ export const Game: React.FC<GameProps> = ({
   return (
     <div style={{ width: '100%' }}>
       <canvas className="canvas" ref={canvasRef} />
-      <Button
-        variant="contained"
-        color="primary"
-        onMouseDown={() => onMouse('left', true)}
-        onMouseUp={() => onMouse('left', false)}
-        onMouseLeave={() => onMouse('left', false)}
-        onTouchStart={() => onMouse('left', true)}
-        onTouchEnd={() => onMouse('left', false)}
-        className={classes.button}
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={6}
       >
-        ひだり
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        onMouseDown={() => onMouse('right', true)}
-        onMouseUp={() => onMouse('right', false)}
-        onMouseLeave={() => onMouse('right', false)}
-        onTouchStart={() => onMouse('right', true)}
-        onTouchEnd={() => onMouse('right', false)}
-        className={classes.button}
-      >
-        みぎ
-      </Button>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onMouseDown={() => onMouse('left', true)}
+            onMouseUp={() => onMouse('left', false)}
+            onMouseLeave={() => onMouse('left', false)}
+            onTouchStart={() => onMouse('left', true)}
+            onTouchEnd={() => onMouse('left', false)}
+            className={classes.button}
+          >
+            ←
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onMouseDown={() => onMouse('right', true)}
+            onMouseUp={() => onMouse('right', false)}
+            onMouseLeave={() => onMouse('right', false)}
+            onTouchStart={() => onMouse('right', true)}
+            onTouchEnd={() => onMouse('right', false)}
+            className={classes.button}
+          >
+            →
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   )
 }
