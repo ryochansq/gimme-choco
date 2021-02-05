@@ -26,23 +26,23 @@ const ReadyEvent: GameEvent = {
 
 const StartEvent: GameEvent = {
   id: 'START',
-  frameLength: 100,
+  frameLength: 70,
 }
 
 const FinishEvent: GameEvent = {
   id: 'FINISH',
-  frameLength: 100,
+  frameLength: 70,
 }
 
 const IntervalEvent: GameEvent = {
   id: 'INTERVAL',
-  frameLength: 100,
+  frameLength: 60,
 }
 
 const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
   return {
     id: 'CHOCO',
-    frameLength: 25,
+    frameLength: 15,
     choco: {
       isChoco,
       lane,
@@ -52,10 +52,11 @@ const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
 }
 
 const makeChocoEventList = (): GameEvent[] => {
-  const res: GameEvent[] = [IntervalEvent]
+  const res: GameEvent[] = []
   // 最初の1つは真ん中のレーンにチョコが落ちる
   res.push(makeChocoEvent(true, 1))
   res.push(IntervalEvent)
+
   PLAN_LIST.forEach((plan) => {
     const list: GameEvent[] = []
     for (let i = 0; i < plan[0]; i++)

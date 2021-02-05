@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
+import TwitterIcon from '@material-ui/icons/Twitter'
 
 type ResultProps = Props & {
   score: number
@@ -8,7 +9,10 @@ type ResultProps = Props & {
 
 const useStyles = makeStyles(() =>
   createStyles({
-    button: {},
+    button: {
+      color: 'white',
+      textTransform: 'none',
+    },
   })
 )
 
@@ -17,6 +21,10 @@ export const Result: React.FC<ResultProps> = ({
   score,
 }: ResultProps) => {
   const classes = useStyles()
+
+  const tweet = () => {
+    console.info('tweet')
+  }
 
   return (
     <div>
@@ -30,6 +38,15 @@ export const Result: React.FC<ResultProps> = ({
         className={classes.button}
       >
         もういちど遊ぶ！
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={tweet}
+        className={classes.button}
+        startIcon={<TwitterIcon />}
+      >
+        Twitterで共有
       </Button>
     </div>
   )

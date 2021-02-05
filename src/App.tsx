@@ -18,6 +18,9 @@ const theme = createMuiTheme({
     primary: {
       main: '#8a0036',
     },
+    secondary: {
+      main: '#00acee',
+    },
   },
 })
 
@@ -64,7 +67,7 @@ const App: React.FC = () => {
                   />
                 )
               default:
-                return <Top setViewState={setViewState} />
+                return <Top setViewState={setViewState} setScore={setScore} />
             }
           })()}
         </Container>

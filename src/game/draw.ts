@@ -34,9 +34,34 @@ export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
     return {
       isChoco: choco.isChoco,
       nx: 20 + choco.lane * 30 - CHOCO_SIZE / 2,
-      ny: 0.02 * choco.frame * choco.frame - 20,
+      ny: 0.05 * choco.frame * choco.frame - 20,
     }
   })
+
+export const calcCatchingList = (
+  chocoList: Choco[],
+  chocoPointList: ChocoPoint[],
+  isLeft: boolean,
+  isRight: boolean
+): boolean[] =>
+  chocoList.map((choco, index) =>
+    isCatching(choco.lane, chocoPointList[index].ny, isLeft, isRight)
+  )
+
+export const isCatching = (
+  lane: Lane,
+  ny: number,
+  isLeft: boolean,
+  isRight: boolean
+): boolean => {
+  const pos = (() => {
+    if (isLeft) return 0
+    else if (isRight) return 2
+    else return 1
+  })()
+  if (lane !== pos) return false
+  return ny >= 95 && ny <= 110
+}
 
 export const drawChoco = (
   ctx: CanvasRenderingContext2D,

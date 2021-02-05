@@ -1,6 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
 
-import { drawMoa, calcChocoPoint, drawChocoList, drawCount } from 'game/draw'
+import {
+  drawMoa,
+  calcChocoPoint,
+  drawChocoList,
+  drawCount,
+  calcCatchingList,
+} from 'game/draw'
 import { makeEventQueue } from 'game/event'
 
 const HEIGHT_RATE = 1.2
@@ -36,13 +42,17 @@ const useGame = ({
     if (!ctx) return
     ctx.clearRect(0, 0, a.current, a.current * HEIGHT_RATE)
     const chocoPointList = calcChocoPoint(chocoList.current)
-    // TODO: チョコともあちゃんの衝突検知
-    setScore(0)
-
+    const catchingList = calcCatchingList(
+      chocoList.current,
+      chocoPointList,
+      isLeft.current,
+      isRight.current
+    )
     drawMoa(ctx, isLeft.current, isRight.current, a.current)
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
-    updateChocoList(chocoPointList)
+    updateScore(catchingList)
+    updateChocoList(chocoPointList, catchingList)
     handleEvent()
   }
 
@@ -102,13 +112,28 @@ const useGame = ({
     console.info('interval')
   }
 
-  const updateChocoList = (chocoPointList: ChocoPoint[]) =>
+  const updateScore = (catchingList: boolean[]) => {
+    const d = catchingList.reduce((acc, b, index) => {
+      if (!b) return acc
+      return chocoList.current[index].isChoco ? 1 : -3
+    }, 0)
+    setScore((currentScore) => Math.max(currentScore + d, 0))
+  }
+
+  const updateChocoList = (
+    chocoPointList: ChocoPoint[],
+    catchingList: boolean[]
+  ) =>
     setChocoList((chocoList) =>
       chocoList
         .map((choco) => {
           return { ...choco, frame: choco.frame + 1 }
         })
-        .filter((_, index) => chocoPointList[index].ny <= 100 * HEIGHT_RATE)
+        .filter(
+          (_, index) =>
+            chocoPointList[index].ny <= 100 * HEIGHT_RATE &&
+            !catchingList[index]
+        )
     )
 
   const init = (canvas: HTMLCanvasElement) => {
@@ -125,7 +150,7 @@ const useGame = ({
   useEffect(() => {
     if (!ctx) return
     setEventQueue(makeEventQueue())
-    const interval = setInterval(draw, 20)
+    const interval = setInterval(draw, 30)
     return () => clearInterval(interval)
   }, [ctx])
 

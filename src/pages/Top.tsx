@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
@@ -8,8 +8,17 @@ const useStyles = makeStyles(() =>
   })
 )
 
-export const Top: React.FC<Props> = ({ setViewState }: Props) => {
+type TopProps = Props & {
+  setScore: React.Dispatch<React.SetStateAction<number>>
+}
+
+export const Top: React.FC<TopProps> = ({
+  setViewState,
+  setScore,
+}: TopProps) => {
   const classes = useStyles()
+
+  useEffect(() => setScore(0), [])
 
   return (
     <div>
