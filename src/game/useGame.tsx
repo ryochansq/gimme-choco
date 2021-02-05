@@ -82,8 +82,6 @@ const useGame = ({
           return handleFinishEvent()
         case 'CHOCO':
           return handleChocoEvent(nextEvent.choco)
-        case 'INTERVAL':
-          return handleIntervalEvent()
         default:
       }
     } else {
@@ -106,10 +104,6 @@ const useGame = ({
     if (!choco) return
     setChocoList((currentList) => [...currentList, choco])
     if (choco.isChoco) setCount((currentCount) => currentCount + 1)
-  }
-
-  const handleIntervalEvent = () => {
-    console.info('interval')
   }
 
   const updateScore = (catchingList: boolean[]) => {

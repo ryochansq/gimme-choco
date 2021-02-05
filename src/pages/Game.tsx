@@ -26,9 +26,21 @@ export const Game: React.FC<GameProps> = ({
   const canvasRef = useRef(null)
   const [init, onMouse] = useGame({ setViewState, setScore })
   useEffect(() => {
+    document.addEventListener('keydown', (event) => onKey(event, true), false)
+    document.addEventListener('keyup', (event) => onKey(event, false), false)
     const canvas = canvasRef.current
     canvas && init(canvas)
   }, [])
+
+  const onKey = (event: KeyboardEvent, isDown: boolean) => {
+    if (event.key === 'Left' || event.key === 'ArrowLeft') {
+      onMouse('left', isDown)
+      event.preventDefault()
+    } else if (event.key === 'Right' || event.key === 'ArrowRight') {
+      onMouse('right', isDown)
+      event.preventDefault()
+    }
+  }
 
   return (
     <div style={{ width: '100%' }}>

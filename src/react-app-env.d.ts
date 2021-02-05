@@ -30,3 +30,13 @@ type GameEvent = {
   frameLength: number
   choco?: Choco
 }
+
+type MoaStatus = {
+  id: '' | 'CATCH' | 'DAMAGE'
+  frameLength: number
+}
+
+type MoaPosition = {
+  id: '' | 'LEFT' | 'RIGHT'
+  frameLength: number
+}

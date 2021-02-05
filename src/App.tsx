@@ -33,6 +33,7 @@ const useStyles = makeStyles(() =>
     },
     body: {
       padding: 0,
+      userSelect: 'none',
       touchAction: 'none',
     },
   })

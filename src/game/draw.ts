@@ -34,7 +34,7 @@ export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
     return {
       isChoco: choco.isChoco,
       nx: 20 + choco.lane * 30 - CHOCO_SIZE / 2,
-      ny: 0.05 * choco.frame * choco.frame - 20,
+      ny: 0.07 * choco.frame * choco.frame - CHOCO_SIZE,
     }
   })
 
