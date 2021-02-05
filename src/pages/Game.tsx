@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import useGame from 'game/useGame'
 
 const useStyles = makeStyles(() =>
   createStyles({
+    score: {
+      fontSize: 20,
+      margin: 4,
+      textAlign: 'center',
+    },
     button: {
       fontSize: 28,
     },
@@ -19,7 +24,7 @@ export const Game: React.FC<GameProps> = ({
 }: GameProps) => {
   const classes = useStyles()
   const canvasRef = useRef(null)
-  const [init, onMouse] = useGame({ setViewState, score, setScore })
+  const [init, onMouse] = useGame({ setViewState, setScore })
   useEffect(() => {
     const canvas = canvasRef.current
     canvas && init(canvas)
@@ -27,14 +32,11 @@ export const Game: React.FC<GameProps> = ({
 
   return (
     <div style={{ width: '100%' }}>
-      <canvas className="canvas" ref={canvasRef} />
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={6}
-      >
+      <canvas ref={canvasRef} />
+      <Typography className={classes.score}>
+        ゲットしたチョコ： {score}
+      </Typography>
+      <Grid container direction="row" justify="center" spacing={6}>
         <Grid item>
           <Button
             variant="contained"
