@@ -37,6 +37,8 @@ const useGame = ({
     ctx.clearRect(0, 0, a.current, a.current * HEIGHT_RATE)
     const chocoPointList = calcChocoPoint(chocoList.current)
     // TODO: チョコともあちゃんの衝突検知
+    setScore(0)
+
     drawMoa(ctx, isLeft.current, isRight.current, a.current)
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
