@@ -34,16 +34,12 @@ export const drawMoa = (
     const x0 = 25
     const interval = 50 - x0
     if (moaStatus?.id === 'DAMAGE') return 25 + interval * 1
-    else if (moaTransition)
-      return (
-        x0 +
-        interval *
-          (lane -
-            ((moaTransition.to - moaTransition.from) *
-              (moaTransition.frameLength + 1)) /
-              3)
-      )
-    else return x0 + interval * prevLane
+    else if (moaTransition) {
+      const to = moaTransition.to
+      const from = moaTransition.from
+      const frameLength = moaTransition.frameLength
+      return x0 + (interval * (from * frameLength + to * (3 - frameLength))) / 3
+    } else return x0 + interval * prevLane
   })()
   const x = (a / 100) * (nx - MOA_SIZE / 2)
   const y = (a / 100) * 85 + moa.height * (1 - yScale)
