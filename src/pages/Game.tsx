@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { Button, Grid, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
@@ -25,7 +25,7 @@ export const Game: React.FC<GameProps> = ({
   const classes = useStyles()
   const canvasRef = useRef(null)
   const [init, onMouse] = useGame({ setViewState, setScore })
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.addEventListener('keydown', (event) => onKey(event, true), false)
     document.addEventListener('keyup', (event) => onKey(event, false), false)
     const canvas = canvasRef.current

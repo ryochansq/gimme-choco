@@ -111,6 +111,8 @@ const useGame = ({
       if (!b) return acc
       return chocoList.current[index].isChoco ? 1 : -3
     }, 0)
+    if (d === 1) window.navigator.vibrate(3)
+    else if (d === -3) window.navigator.vibrate([10, 50, 10, 50, 10])
     setScore((currentScore) => Math.max(currentScore + d, 0))
   }
 
