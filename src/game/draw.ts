@@ -3,10 +3,14 @@ const CHOCO_SIZE = 12
 
 const moa = new Image()
 moa.src = '/moa.png'
-
+const moaLeft = new Image()
+moaLeft.src = '/moa.png'
+const moaRight = new Image()
+moaRight.src = '/moa.png'
+const moaDamaged = new Image()
+moaDamaged.src = '/moa.png'
 const choco = new Image()
 choco.src = '/choco.png'
-
 const poison = new Image()
 poison.src = '/poison.png'
 
@@ -14,20 +18,29 @@ export const drawMoa = (
   ctx: CanvasRenderingContext2D,
   isLeft: boolean,
   isRight: boolean,
-  a: number
+  a: number,
+  moaStatus: MoaStatus | null
 ): void => {
-  // TODO: MoaStatusとMoaTransitionで描画を変える
+  // TODO: MoaTransitionで描画を変える
   const scale = (a / moa.width / 100) * MOA_SIZE
+  const yScale = (() => {
+    if (!moaStatus) return 1
+    const key = moaStatus.frameLength % 5
+    if (key === 0) return 0.97
+    else if (key === 1 || key === 4) return 0.95
+    else return 0.94
+  })()
   const nx = (() => {
     const x0 = 25
     const interval = 50 - x0
-    if (isLeft) return x0
+    if (moaStatus?.id === 'DAMAGE') return 25 + interval * 1
+    else if (isLeft) return x0
     else if (isRight) return x0 + interval * 2
     else return 25 + interval * 1
   })()
   const x = (a / 100) * (nx - MOA_SIZE / 2)
-  const y = (a / 100) * 85
-  ctx.drawImage(moa, x, y, moa.width * scale, moa.height * scale)
+  const y = (a / 100) * 85 + moa.height * (1 - yScale)
+  ctx.drawImage(moa, x, y, moa.width * scale, moa.height * scale * yScale)
 }
 
 export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
@@ -43,25 +56,28 @@ export const calcCatchingList = (
   chocoList: Choco[],
   chocoPointList: ChocoPoint[],
   isLeft: boolean,
-  isRight: boolean
+  isRight: boolean,
+  moaStatus: MoaStatus | null
 ): boolean[] =>
   chocoList.map((choco, index) =>
-    isCatching(choco.lane, chocoPointList[index].ny, isLeft, isRight)
+    isCatching(choco.lane, chocoPointList[index].ny, isLeft, isRight, moaStatus)
   )
 
 export const isCatching = (
   lane: Lane,
   ny: number,
   isLeft: boolean,
-  isRight: boolean
+  isRight: boolean,
+  moaStatus: MoaStatus | null
 ): boolean => {
+  if (moaStatus?.id === 'DAMAGE') return false
   const pos = (() => {
     if (isLeft) return 0
     else if (isRight) return 2
     else return 1
   })()
   if (lane !== pos) return false
-  return ny >= 95 && ny <= 110
+  return ny >= 93 && ny <= 108
 }
 
 export const drawChoco = (

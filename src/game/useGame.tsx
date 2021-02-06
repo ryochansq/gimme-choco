@@ -37,8 +37,12 @@ const useGame = ({
   const [count, setCount] = useValueRef(0)
   const [eventQueue, setEventQueue] = useValueRef<GameEvent[]>([])
   const [gameEvent, setGameEvent] = useValueRef<GameEvent | null>(null)
+  const [moaStatus, setMoaStatus] = useValueRef<MoaStatus | null>(null)
+  // const [moaTransition, setMoaTransition] = useValueRef<MoaTransition | null>(
+  //   null
+  // )
 
-  const draw = () => {
+  const update = () => {
     if (!ctx) return
     ctx.clearRect(0, 0, a.current, a.current * HEIGHT_RATE)
     const chocoPointList = calcChocoPoint(chocoList.current)
@@ -46,12 +50,15 @@ const useGame = ({
       chocoList.current,
       chocoPointList,
       isLeft.current,
-      isRight.current
+      isRight.current,
+      moaStatus.current
     )
-    drawMoa(ctx, isLeft.current, isRight.current, a.current)
+    drawMoa(ctx, isLeft.current, isRight.current, a.current, moaStatus.current)
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
-    updateScore(catchingList)
+    const point = calcGettingPoint(catchingList)
+    setScore((currentScore) => Math.max(currentScore + point, 0))
+    updateMoaStatus(point)
     updateChocoList(chocoPointList, catchingList)
     handleEvent()
   }
@@ -108,14 +115,23 @@ const useGame = ({
     if (choco.isChoco) setCount((currentCount) => currentCount + 1)
   }
 
-  const updateScore = (catchingList: boolean[]) => {
-    const d = catchingList.reduce((acc, b, index) => {
+  const calcGettingPoint = (catchingList: boolean[]): number =>
+    catchingList.reduce((acc, b, index) => {
       if (!b) return acc
       return chocoList.current[index].isChoco ? 1 : -3
     }, 0)
-    if (d === 1) window.navigator.vibrate(3)
-    else if (d === -3) window.navigator.vibrate([10, 50, 10, 50, 10])
-    setScore((currentScore) => Math.max(currentScore + d, 0))
+
+  const updateMoaStatus = (point: number) => {
+    if (point > 0) setMoaStatus({ id: 'CATCH', frameLength: 5 })
+    else if (point < 0) setMoaStatus({ id: 'DAMAGE', frameLength: 40 })
+    else
+      setMoaStatus((status) => {
+        if (!status || status.frameLength === 0) return null
+        return {
+          ...status,
+          frameLength: status.frameLength - 1,
+        }
+      })
   }
 
   const updateChocoList = (
@@ -148,7 +164,7 @@ const useGame = ({
   useEffect(() => {
     if (!ctx) return
     setEventQueue(makeEventQueue())
-    const interval = setInterval(draw, 30)
+    const interval = setInterval(update, 30)
     return () => clearInterval(interval)
   }, [ctx])
 

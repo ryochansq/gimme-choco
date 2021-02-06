@@ -32,11 +32,11 @@ type GameEvent = {
 }
 
 type MoaStatus = {
-  id: '' | 'CATCH' | 'DAMAGE'
+  id: 'CATCH' | 'DAMAGE'
   frameLength: number
 }
 
 type MoaTransition = {
-  id: '' | 'TO_LEFT' | 'TO_RIGHT' | 'FROM_LEFT' | 'FROM_RIGHT'
+  id: 'TO_LEFT' | 'TO_RIGHT' | 'FROM_LEFT' | 'FROM_RIGHT'
   frameLength: number
 }
