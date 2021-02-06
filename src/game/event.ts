@@ -42,7 +42,7 @@ const IntervalEvent: GameEvent = {
 const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
   return {
     id: 'CHOCO',
-    frameLength: 15,
+    frameLength: 12,
     choco: {
       isChoco,
       lane,
