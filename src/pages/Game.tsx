@@ -42,12 +42,12 @@ export const Game: React.FC<GameProps> = ({
     }
   }
 
+  // TODO: 左右ボタンの大きさをもう少し大きくする？
+
   return (
     <div style={{ width: '100%' }}>
       <canvas ref={canvasRef} />
-      <Typography className={classes.score}>
-        ゲットしたチョコ： {score}
-      </Typography>
+      <Typography className={classes.score}>ゲットした数： {score}</Typography>
       <Grid container direction="row" justify="center" spacing={6}>
         <Grid item>
           <Button

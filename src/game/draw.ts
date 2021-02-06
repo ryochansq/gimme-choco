@@ -16,6 +16,7 @@ export const drawMoa = (
   isRight: boolean,
   a: number
 ): void => {
+  // TODO: MoaStatusとMoaTransitionで描画を変える
   const scale = (a / moa.width / 100) * MOA_SIZE
   const nx = (() => {
     const x0 = 25
@@ -68,6 +69,7 @@ export const drawChoco = (
   a: number,
   chocoPoint: ChocoPoint
 ): void => {
+  // TODO: チョコの画像の種類を増やして、ランダムに表示する？
   const scale = (a / choco.width / 100) * CHOCO_SIZE
   const x = (a / 100) * chocoPoint.nx
   const y = (a / 100) * chocoPoint.ny

@@ -20,6 +20,9 @@ export const Top: React.FC<TopProps> = ({
 
   useEffect(() => setScore(0), [])
 
+  // TODO: 説明をちゃんと書く
+  // TODO: スタートボタンに画像を付けて大きくする？
+
   return (
     <div>
       <Typography variant="body1" color="inherit">

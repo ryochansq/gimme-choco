@@ -24,7 +24,10 @@ export const Result: React.FC<ResultProps> = ({
 
   const tweet = () => {
     console.info('tweet')
+    // TODO: ツイート処理
   }
+
+  // TODO: 満腹度に応じて画像を表示
 
   return (
     <div>

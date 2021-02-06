@@ -36,7 +36,7 @@ type MoaStatus = {
   frameLength: number
 }
 
-type MoaPosition = {
-  id: '' | 'LEFT' | 'RIGHT'
+type MoaTransition = {
+  id: '' | 'TO_LEFT' | 'TO_RIGHT' | 'FROM_LEFT' | 'FROM_RIGHT'
   frameLength: number
 }

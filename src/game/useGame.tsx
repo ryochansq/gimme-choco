@@ -94,10 +94,12 @@ const useGame = ({
 
   const handleStartEvent = () => {
     console.info('start')
+    // TODO: Startの画像を表示させる。Give me Chocolate？
   }
 
   const handleFinishEvent = () => {
     console.info('finish')
+    // TODO: Finishの画像を表示させる
   }
 
   const handleChocoEvent = (choco: Choco | undefined) => {
