@@ -16,12 +16,12 @@ poison.src = '/poison.png'
 
 export const drawMoa = (
   ctx: CanvasRenderingContext2D,
-  isLeft: boolean,
-  isRight: boolean,
+  lane: Lane,
+  prevLane: Lane,
   a: number,
-  moaStatus: MoaStatus | null
+  moaStatus: MoaStatus | null,
+  moaTransition: MoaTransition | null
 ): void => {
-  // TODO: MoaTransitionで描画を変える
   const scale = (a / moa.width / 100) * MOA_SIZE
   const yScale = (() => {
     if (!moaStatus) return 1
@@ -34,9 +34,16 @@ export const drawMoa = (
     const x0 = 25
     const interval = 50 - x0
     if (moaStatus?.id === 'DAMAGE') return 25 + interval * 1
-    else if (isLeft) return x0
-    else if (isRight) return x0 + interval * 2
-    else return 25 + interval * 1
+    else if (moaTransition)
+      return (
+        x0 +
+        interval *
+          (lane -
+            ((moaTransition.to - moaTransition.from) *
+              (moaTransition.frameLength + 1)) /
+              3)
+      )
+    else return x0 + interval * prevLane
   })()
   const x = (a / 100) * (nx - MOA_SIZE / 2)
   const y = (a / 100) * 85 + moa.height * (1 - yScale)
@@ -48,35 +55,28 @@ export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
     return {
       isChoco: choco.isChoco,
       nx: 20 + choco.lane * 30 - CHOCO_SIZE / 2,
-      ny: 0.07 * choco.frame * choco.frame - CHOCO_SIZE,
+      ny: 0.1 * choco.frame * choco.frame - CHOCO_SIZE,
     }
   })
 
 export const calcCatchingList = (
   chocoList: Choco[],
   chocoPointList: ChocoPoint[],
-  isLeft: boolean,
-  isRight: boolean,
+  moaLane: Lane,
   moaStatus: MoaStatus | null
 ): boolean[] =>
   chocoList.map((choco, index) =>
-    isCatching(choco.lane, chocoPointList[index].ny, isLeft, isRight, moaStatus)
+    isCatching(choco.lane, chocoPointList[index].ny, moaLane, moaStatus)
   )
 
 export const isCatching = (
-  lane: Lane,
+  chocoLane: Lane,
   ny: number,
-  isLeft: boolean,
-  isRight: boolean,
+  moaLane: Lane,
   moaStatus: MoaStatus | null
 ): boolean => {
   if (moaStatus?.id === 'DAMAGE') return false
-  const pos = (() => {
-    if (isLeft) return 0
-    else if (isRight) return 2
-    else return 1
-  })()
-  if (lane !== pos) return false
+  if (chocoLane !== moaLane) return false
   return ny >= 93 && ny <= 108
 }
 

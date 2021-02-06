@@ -37,6 +37,7 @@ type MoaStatus = {
 }
 
 type MoaTransition = {
-  id: 'TO_LEFT' | 'TO_RIGHT' | 'FROM_LEFT' | 'FROM_RIGHT'
+  from: Lane
+  to: Lane
   frameLength: number
 }

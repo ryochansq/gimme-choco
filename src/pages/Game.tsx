@@ -26,10 +26,14 @@ export const Game: React.FC<GameProps> = ({
   const canvasRef = useRef(null)
   const [init, onMouse] = useGame({ setViewState, setScore })
   useLayoutEffect(() => {
-    document.addEventListener('keydown', (event) => onKey(event, true), false)
-    document.addEventListener('keyup', (event) => onKey(event, false), false)
+    document.addEventListener('keydown', onKeyTrue, false)
+    document.addEventListener('keyup', onKeyFalse, false)
     const canvas = canvasRef.current
     canvas && init(canvas)
+    return () => {
+      document.removeEventListener('keydown', onKeyTrue, false)
+      document.removeEventListener('keyup', onKeyFalse, false)
+    }
   }, [])
 
   const onKey = (event: KeyboardEvent, isDown: boolean) => {
@@ -41,6 +45,9 @@ export const Game: React.FC<GameProps> = ({
       event.preventDefault()
     }
   }
+
+  const onKeyTrue = (event: KeyboardEvent) => onKey(event, true)
+  const onKeyFalse = (event: KeyboardEvent) => onKey(event, false)
 
   // TODO: 左右ボタンの大きさをもう少し大きくする？
 

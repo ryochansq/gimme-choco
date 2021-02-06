@@ -32,15 +32,21 @@ const useGame = ({
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [isLeft, setIsLeft] = useValueRef(false)
   const [isRight, setIsRight] = useValueRef(false)
+  const [prevMoaLane, setPrevMoaLane] = useValueRef<Lane>(1)
   const [a, setA] = useValueRef(360)
   const [chocoList, setChocoList] = useValueRef<Choco[]>([])
   const [count, setCount] = useValueRef(0)
   const [eventQueue, setEventQueue] = useValueRef<GameEvent[]>([])
   const [gameEvent, setGameEvent] = useValueRef<GameEvent | null>(null)
   const [moaStatus, setMoaStatus] = useValueRef<MoaStatus | null>(null)
-  // const [moaTransition, setMoaTransition] = useValueRef<MoaTransition | null>(
-  //   null
-  // )
+  const [moaTransition, setMoaTransition] = useValueRef<MoaTransition | null>(
+    null
+  )
+  const moaLane = (): Lane => {
+    if (isLeft.current) return 0
+    else if (isRight.current) return 2
+    else return 1
+  }
 
   const update = () => {
     if (!ctx) return
@@ -49,16 +55,23 @@ const useGame = ({
     const catchingList = calcCatchingList(
       chocoList.current,
       chocoPointList,
-      isLeft.current,
-      isRight.current,
+      moaLane(),
       moaStatus.current
     )
-    drawMoa(ctx, isLeft.current, isRight.current, a.current, moaStatus.current)
+    drawMoa(
+      ctx,
+      moaLane(),
+      prevMoaLane.current,
+      a.current,
+      moaStatus.current,
+      moaTransition.current
+    )
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
     const point = calcGettingPoint(catchingList)
     setScore((currentScore) => Math.max(currentScore + point, 0))
     updateMoaStatus(point)
+    updateMoaTransition()
     updateChocoList(chocoPointList, catchingList)
     handleEvent()
   }
@@ -132,6 +145,26 @@ const useGame = ({
           frameLength: status.frameLength - 1,
         }
       })
+  }
+
+  const updateMoaTransition = () => {
+    const nowLane = moaLane()
+    if (prevMoaLane.current === nowLane)
+      setMoaTransition((tr) => {
+        if (!tr || tr.frameLength === 0) return null
+        return {
+          ...tr,
+          frameLength: tr.frameLength - 1,
+        }
+      })
+    else {
+      setMoaTransition({
+        from: prevMoaLane.current,
+        to: nowLane,
+        frameLength: 1,
+      })
+      setPrevMoaLane(nowLane)
+    }
   }
 
   const updateChocoList = (
