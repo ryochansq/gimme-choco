@@ -1,4 +1,4 @@
-const MOA_SIZE = 50
+const MOA_SIZE = 35
 const CHOCO_SIZE = 15
 
 const moa = new Image()
@@ -34,9 +34,9 @@ export const drawMoa = (
     else return 0.9
   })()
   const nx = (() => {
-    const x0 = 25
+    const x0 = 30
     const interval = 50 - x0
-    if (moaStatus?.id === 'DAMAGE') return 25 + interval * 1
+    if (moaStatus?.id === 'DAMAGE') return 50
     else if (moaTransition) {
       const to = moaTransition.to
       const from = moaTransition.from

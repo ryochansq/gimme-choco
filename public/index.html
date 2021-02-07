@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <!-- TODO: 画像のpreloadをする -->
     <!-- TODO: Twitterのメディアカード？を設定する -->
     <!-- TODO: manifest.jsonにて、faviconを設定する -->
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="preload" href="/moa.png" as="image">
+    <link rel="preload" href="/moaDamaged.png" as="image">
+    <link rel="preload" href="/moaLeft.png" as="image">
+    <link rel="preload" href="/moaRight.png" as="image">
+    <link rel="preload" href="/choco0.png" as="image">
+    <link rel="preload" href="/choco1.png" as="image">
+    <link rel="preload" href="/choco2.png" as="image">
+    <link rel="preload" href="/hone.png" as="image">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/

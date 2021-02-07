@@ -27,7 +27,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      backgroundColor: '#F2EFBB',
+      backgroundColor: '#fff5a3',
       height: '100vh',
       minHeight: '100vh',
       userSelect: 'none',
