@@ -8,12 +8,12 @@ const useStyles = makeStyles(() =>
   createStyles({
     score: {
       fontSize: 20,
-      margin: 4,
+      marginBottom: 8,
       textAlign: 'center',
     },
     button: {
       fontSize: 32,
-      padding: 16,
+      padding: '12px 16px 20px',
     },
   })
 )

@@ -124,8 +124,22 @@ const useGame = ({
 
   const handleChocoEvent = (choco: Choco | undefined) => {
     if (!choco) return
-    setChocoList((currentList) => [...currentList, choco])
+    const honeLane = getHoneLane(choco.lane)
+    if (honeLane === choco.lane)
+      setChocoList((currentList) => [...currentList, choco])
+    else
+      setChocoList((currentList) => [
+        ...currentList,
+        choco,
+        { isChoco: false, type: 0, lane: honeLane, frame: 0 },
+      ])
     if (choco.isChoco) setCount((currentCount) => currentCount + 1)
+  }
+
+  const getHoneLane = (lane: Lane): Lane => {
+    const r = Math.floor(Math.random() * Math.floor(10))
+    if (r >= 3) return lane
+    else return r as Lane
   }
 
   const calcGettingPoint = (catchingList: boolean[]): number =>
