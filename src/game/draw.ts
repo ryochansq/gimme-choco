@@ -83,7 +83,7 @@ export const isCatching = (
 ): boolean => {
   if (moaStatus?.id === 'DAMAGE') return false
   if (chocoLane !== moaLane) return false
-  return ny >= 85 && ny <= 95
+  return ny >= 85 && ny <= 92
 }
 
 export const drawChoco = (

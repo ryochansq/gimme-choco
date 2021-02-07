@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import useGame from 'game/useGame'
@@ -27,67 +27,45 @@ export const Game: React.FC<GameProps> = ({
   const canvasRef = useRef(null)
   const [init, onMouse] = useGame({ setViewState, setScore })
   useLayoutEffect(() => {
-    document.addEventListener('keydown', onKeyTrue, false)
-    document.addEventListener('keyup', onKeyFalse, false)
+    document.addEventListener('keydown', onKey, false)
+    document.addEventListener('keyup', onKey, false)
+    document.addEventListener('touchstart', onTouch, false)
+    document.addEventListener('touchend', onTouch, false)
     const canvas = canvasRef.current
     canvas && init(canvas)
     return () => {
-      document.removeEventListener('keydown', onKeyTrue, false)
-      document.removeEventListener('keyup', onKeyFalse, false)
+      document.removeEventListener('keydown', onKey, false)
+      document.removeEventListener('keyup', onKey, false)
+      document.removeEventListener('touchstart', onTouch, false)
+      document.removeEventListener('touchend', onTouch, false)
     }
   }, [])
 
-  const onKey = (event: KeyboardEvent, isDown: boolean) => {
-    if (event.key === 'Left' || event.key === 'ArrowLeft') {
+  const onKey = (event: KeyboardEvent) => {
+    const isDown = event.type === 'keydown'
+    if (event.key === 'Left' || event.key === 'ArrowLeft')
       onMouse('left', isDown)
-      event.preventDefault()
-    } else if (event.key === 'Right' || event.key === 'ArrowRight') {
+    else if (event.key === 'Right' || event.key === 'ArrowRight')
       onMouse('right', isDown)
-      event.preventDefault()
-    }
+    event.preventDefault()
   }
 
-  const onKeyTrue = (event: KeyboardEvent) => onKey(event, true)
-  const onKeyFalse = (event: KeyboardEvent) => onKey(event, false)
+  const [num, setNum] = React.useState(0)
 
-  // TODO: 左右ボタンの大きさをもう少し大きくする？
+  const onTouch = (event: TouchEvent) => {
+    const isDown = event.type === 'touchstart'
+    setNum(event.changedTouches.length)
+    const x = event.changedTouches.item(0)?.clientX
+    if (x && x <= document.body.clientWidth / 2) onMouse('left', isDown)
+    else onMouse('right', isDown)
+    event.preventDefault()
+  }
 
   return (
     <div style={{ width: '100%' }}>
       <canvas ref={canvasRef} />
       <Typography className={classes.score}>ゲットした数： {score}</Typography>
-      <Grid container direction="row" justify="center" spacing={6}>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onMouseDown={() => onMouse('left', true)}
-            onMouseUp={() => onMouse('left', false)}
-            onMouseLeave={() => onMouse('left', false)}
-            onTouchStart={() => onMouse('left', true)}
-            onTouchEnd={() => onMouse('left', false)}
-            className={classes.button}
-          >
-            {'　←　'}
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onMouseDown={() => onMouse('right', true)}
-            onMouseUp={() => onMouse('right', false)}
-            onMouseLeave={() => onMouse('right', false)}
-            onTouchStart={() => onMouse('right', true)}
-            onTouchEnd={() => onMouse('right', false)}
-            className={classes.button}
-          >
-            {'　→　'}
-          </Button>
-        </Grid>
-      </Grid>
+      <Typography className={classes.score}>{num}</Typography>
     </div>
   )
 }

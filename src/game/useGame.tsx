@@ -150,7 +150,7 @@ const useGame = ({
 
   const updateMoaStatus = (point: number) => {
     if (point > 0) setMoaStatus({ id: 'CATCH', frameLength: 5 })
-    else if (point < 0) setMoaStatus({ id: 'DAMAGE', frameLength: 40 })
+    else if (point < 0) setMoaStatus({ id: 'DAMAGE', frameLength: 20 })
     else
       setMoaStatus((status) => {
         if (!status || status.frameLength === 0) return null
@@ -215,12 +215,12 @@ const useGame = ({
     return () => clearInterval(interval)
   }, [ctx])
 
-  const onMouse = (direction: 'left' | 'right', isDown: boolean) => {
+  const onMove = (direction: 'left' | 'right', isDown: boolean) => {
     if (direction === 'left') setIsLeft(isDown)
     else setIsRight(isDown)
   }
 
-  return [init, onMouse]
+  return [init, onMove]
 }
 
 export default useGame

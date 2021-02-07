@@ -30,11 +30,11 @@ const useStyles = makeStyles(() =>
       backgroundColor: '#F2EFBB',
       height: '100vh',
       minHeight: '100vh',
+      touchAction: 'none',
       userSelect: 'none',
     },
     body: {
       padding: 0,
-      touchAction: 'none',
     },
   })
 )
