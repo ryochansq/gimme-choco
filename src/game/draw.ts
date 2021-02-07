@@ -4,11 +4,11 @@ const CHOCO_SIZE = 15
 const moa = new Image()
 moa.src = '/moa.png'
 const moaLeft = new Image()
-moaLeft.src = '/moa.png'
+moaLeft.src = '/moaLeft.png'
 const moaRight = new Image()
-moaRight.src = '/moa.png'
+moaRight.src = '/moaRight.png'
 const moaDamaged = new Image()
-moaDamaged.src = '/moa.png'
+moaDamaged.src = '/moaDamaged.png'
 const hone = new Image()
 hone.src = '/hone.png'
 const chocoList: HTMLImageElement[] = []
@@ -47,7 +47,8 @@ export const drawMoa = (
   const x = (a / 100) * (nx - MOA_SIZE / 2)
   const y = (a / 100) * 65 + moa.height * scale * (1 - yScale)
   const img = (() => {
-    if (lane === 0) return moaLeft
+    if (moaStatus?.id === 'DAMAGE') return moaDamaged
+    else if (lane === 0) return moaLeft
     else if (lane === 1) return moa
     else return moaRight
   })()
