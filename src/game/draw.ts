@@ -61,7 +61,7 @@ export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
       isChoco: choco.isChoco,
       type: choco.type,
       nx: 20 + choco.lane * 30 - CHOCO_SIZE / 2,
-      ny: 0.1 * choco.frame * choco.frame - CHOCO_SIZE,
+      ny: 0.07 * choco.frame * choco.frame - CHOCO_SIZE,
     }
   })
 
@@ -83,7 +83,7 @@ export const isCatching = (
 ): boolean => {
   if (moaStatus?.id === 'DAMAGE') return false
   if (chocoLane !== moaLane) return false
-  return ny >= 85 && ny <= 100
+  return ny >= 85 && ny <= 95
 }
 
 export const drawChoco = (

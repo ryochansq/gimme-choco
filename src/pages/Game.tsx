@@ -12,7 +12,8 @@ const useStyles = makeStyles(() =>
       textAlign: 'center',
     },
     button: {
-      fontSize: 28,
+      fontSize: 32,
+      padding: 16,
     },
   })
 )
@@ -68,7 +69,7 @@ export const Game: React.FC<GameProps> = ({
             onTouchEnd={() => onMouse('left', false)}
             className={classes.button}
           >
-            ←
+            {'　←　'}
           </Button>
         </Grid>
         <Grid item>
@@ -83,7 +84,7 @@ export const Game: React.FC<GameProps> = ({
             onTouchEnd={() => onMouse('right', false)}
             className={classes.button}
           >
-            →
+            {'　→　'}
           </Button>
         </Grid>
       </Grid>

@@ -2,14 +2,14 @@ const PLAN_LIST = [
   [2, 0],
   [2, 1],
   [3, 1],
-  [5, 2],
+  [5, 1],
   [5, 0],
-  [4, 3],
-  [10, 3],
-  [8, 2],
-  [10, 3],
-  [20, 4],
-  [30, 6],
+  [4, 2],
+  [10, 2],
+  [8, 1],
+  [10, 2],
+  [20, 3],
+  [30, 5],
 ]
 
 export const makeEventQueue = (): GameEvent[] => [
@@ -42,7 +42,7 @@ const IntervalEvent: GameEvent = {
 const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
   return {
     id: 'CHOCO',
-    frameLength: 12,
+    frameLength: 9 + getRandomLane() * 2,
     choco: {
       isChoco,
       type: getRandomLane(),
