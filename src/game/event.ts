@@ -45,6 +45,7 @@ const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
     frameLength: 12,
     choco: {
       isChoco,
+      type: getRandomLane(),
       lane,
       frame: 0,
     },

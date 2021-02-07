@@ -1,5 +1,5 @@
-const MOA_SIZE = 30
-const CHOCO_SIZE = 12
+const MOA_SIZE = 50
+const CHOCO_SIZE = 15
 
 const moa = new Image()
 moa.src = '/moa.png'
@@ -9,10 +9,13 @@ const moaRight = new Image()
 moaRight.src = '/moa.png'
 const moaDamaged = new Image()
 moaDamaged.src = '/moa.png'
-const choco = new Image()
-choco.src = '/choco.png'
-const poison = new Image()
-poison.src = '/poison.png'
+const hone = new Image()
+hone.src = '/hone.png'
+const chocoList: HTMLImageElement[] = []
+for (let i = 0; i < 3; i++) {
+  chocoList.push(new Image())
+  chocoList[i].src = `/choco${i}.png`
+}
 
 export const drawMoa = (
   ctx: CanvasRenderingContext2D,
@@ -26,9 +29,9 @@ export const drawMoa = (
   const yScale = (() => {
     if (!moaStatus) return 1
     const key = moaStatus.frameLength % 5
-    if (key === 0) return 0.97
-    else if (key === 1 || key === 4) return 0.95
-    else return 0.94
+    if (key === 0) return 0.95
+    else if (key === 1 || key === 4) return 0.92
+    else return 0.9
   })()
   const nx = (() => {
     const x0 = 25
@@ -42,14 +45,20 @@ export const drawMoa = (
     } else return x0 + interval * prevLane
   })()
   const x = (a / 100) * (nx - MOA_SIZE / 2)
-  const y = (a / 100) * 85 + moa.height * (1 - yScale)
-  ctx.drawImage(moa, x, y, moa.width * scale, moa.height * scale * yScale)
+  const y = (a / 100) * 65 + moa.height * scale * (1 - yScale)
+  const img = (() => {
+    if (lane === 0) return moaLeft
+    else if (lane === 1) return moa
+    else return moaRight
+  })()
+  ctx.drawImage(img, x, y, moa.width * scale, moa.height * scale * yScale)
 }
 
 export const calcChocoPoint = (chocoList: Choco[]): ChocoPoint[] =>
   chocoList.map((choco) => {
     return {
       isChoco: choco.isChoco,
+      type: choco.type,
       nx: 20 + choco.lane * 30 - CHOCO_SIZE / 2,
       ny: 0.1 * choco.frame * choco.frame - CHOCO_SIZE,
     }
@@ -73,7 +82,7 @@ export const isCatching = (
 ): boolean => {
   if (moaStatus?.id === 'DAMAGE') return false
   if (chocoLane !== moaLane) return false
-  return ny >= 93 && ny <= 108
+  return ny >= 85 && ny <= 100
 }
 
 export const drawChoco = (
@@ -81,11 +90,11 @@ export const drawChoco = (
   a: number,
   chocoPoint: ChocoPoint
 ): void => {
-  // TODO: チョコの画像の種類を増やして、ランダムに表示する？
+  const choco = chocoList[chocoPoint.type]
   const scale = (a / choco.width / 100) * CHOCO_SIZE
   const x = (a / 100) * chocoPoint.nx
   const y = (a / 100) * chocoPoint.ny
-  const element = chocoPoint.isChoco ? choco : poison
+  const element = chocoPoint.isChoco ? choco : hone
   ctx.drawImage(element, x, y, choco.width * scale, choco.height * scale)
 }
 

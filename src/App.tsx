@@ -16,7 +16,7 @@ import { Result } from 'pages/Result'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#8a0036',
+      main: '#59210C',
     },
     secondary: {
       main: '#00acee',
@@ -27,7 +27,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      backgroundColor: '#feb',
+      backgroundColor: '#F2EFBB',
       height: '100vh',
       minHeight: '100vh',
       userSelect: 'none',

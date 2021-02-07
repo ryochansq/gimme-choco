@@ -15,12 +15,14 @@ type Lane = 0 | 1 | 2
 
 type Choco = {
   isChoco: boolean
+  type: 0 | 1 | 2
   lane: Lane
   frame: number
 }
 
 type ChocoPoint = {
   isChoco: boolean
+  type: 0 | 1 | 2
   nx: number
   ny: number
 }
