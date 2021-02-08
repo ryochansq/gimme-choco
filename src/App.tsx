@@ -3,9 +3,9 @@ import {
   AppBar,
   Container,
   createMuiTheme,
+  Grid,
   ThemeProvider,
   Toolbar,
-  Typography,
 } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
@@ -33,6 +33,14 @@ const useStyles = makeStyles(() =>
       touchAction: 'none',
       userSelect: 'none',
     },
+    toolbar: {
+      padding: 0,
+    },
+    title: {
+      height: 24,
+      width: 'auto',
+      margin: '0 auto',
+    },
     body: {
       padding: 0,
     },
@@ -48,10 +56,8 @@ const App: React.FC = () => {
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
         <AppBar position="static">
-          <Toolbar variant="dense">
-            <Typography variant="body1" color="inherit">
-              もあちゃんのギミチョコだいさくせん
-            </Typography>
+          <Toolbar variant="dense" className={classes.toolbar}>
+            <img src="/title.png" className={classes.title} />
           </Toolbar>
         </AppBar>
         <Container maxWidth="xs" className={classes.body}>
