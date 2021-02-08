@@ -106,31 +106,13 @@ export const useGame = ({
       const nextEvent = currentQueue[0]
       setGameEvent(nextEvent)
       setEventQueue((queue) => queue.filter((_, index) => index !== 0))
-      switch (nextEvent.id) {
-        case 'START':
-          return handleStartEvent()
-        case 'FINISH':
-          return handleFinishEvent()
-        case 'CHOCO':
-          return handleChocoEvent(nextEvent.choco)
-        default:
-      }
+      if (nextEvent.id === 'CHOCO') return handleChocoEvent(nextEvent.choco)
     } else {
       setGameEvent((event) => {
         if (!event) return event
         return { ...event, frameLength: event.frameLength - 1 }
       })
     }
-  }
-
-  const handleStartEvent = () => {
-    console.info('start')
-    // TODO: Startの画像を表示させる。Give me Chocolate？
-  }
-
-  const handleFinishEvent = () => {
-    console.info('finish')
-    // TODO: Finishの画像を表示させる
   }
 
   const handleChocoEvent = (choco: Choco | undefined) => {

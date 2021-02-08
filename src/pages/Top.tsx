@@ -35,8 +35,6 @@ export const Top: React.FC<TopProps> = ({
   }, [])
   useListener({ onMouse })
 
-  // TODO: 実際にお試しで動かせるもあちゃんを表示したり？
-
   return (
     <Grid container spacing={2} className={classes.container}>
       <Grid item>
