@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 
 import {
-  drawMoa,
+  calcCatchingList,
   calcChocoPoint,
+  drawMoa,
   drawChocoList,
   drawCount,
-  calcCatchingList,
+  drawStartText,
+  drawFinishText,
 } from 'game/draw'
 import { makeEventQueue, getRandomLane } from 'game/event'
 
@@ -68,12 +70,20 @@ const useGame = ({
     )
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
+    drawText()
     const point = calcGettingPoint(catchingList)
     setScore((currentScore) => Math.max(currentScore + point, 0))
     updateMoaStatus(point)
     updateMoaTransition()
     updateChocoList(chocoPointList, catchingList)
     handleEvent()
+  }
+
+  const drawText = () => {
+    const event = gameEvent.current
+    if (!event || !ctx) return
+    if (event.id === 'START') drawStartText(ctx, a.current, event.frameLength)
+    else if (event.id === 'FINISH') drawFinishText(ctx, a.current)
   }
 
   const handleEvent = () => {

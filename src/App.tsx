@@ -3,7 +3,6 @@ import {
   AppBar,
   Container,
   createMuiTheme,
-  Grid,
   ThemeProvider,
   Toolbar,
 } from '@material-ui/core'

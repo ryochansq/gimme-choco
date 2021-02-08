@@ -16,6 +16,12 @@ for (let i = 0; i < 3; i++) {
   chocoList.push(new Image())
   chocoList[i].src = `/choco${i}.png`
 }
+const giveMe = new Image()
+giveMe.src = '/giveMe.png'
+const chocolate = new Image()
+chocolate.src = '/chocolate.png'
+const finish = new Image()
+finish.src = '/finish.png'
 
 export const drawMoa = (
   ctx: CanvasRenderingContext2D,
@@ -75,7 +81,7 @@ export const calcCatchingList = (
     isCatching(choco.lane, chocoPointList[index].ny, moaLane, moaStatus)
   )
 
-export const isCatching = (
+const isCatching = (
   chocoLane: Lane,
   ny: number,
   moaLane: Lane,
@@ -86,7 +92,7 @@ export const isCatching = (
   return ny >= 86 && ny <= 92
 }
 
-export const drawChoco = (
+const drawChoco = (
   ctx: CanvasRenderingContext2D,
   a: number,
   chocoPoint: ChocoPoint
@@ -121,4 +127,31 @@ export const drawCount = (
   const x2 = a - measuredText2.width - 8
   const y2 = 24 * 2
   ctx.fillText(text2, x2, y2)
+}
+
+export const drawStartText = (
+  ctx: CanvasRenderingContext2D,
+  a: number,
+  frame: number
+): void => {
+  if (frame >= 40 && frame < 50) return
+  const scale = a / giveMe.width
+  const width = giveMe.width * scale
+  const height = giveMe.height * scale
+  const x = 0
+  const y = a / 2 - height / 2
+  const element = frame < 40 ? chocolate : giveMe
+  ctx.drawImage(element, x, y, width, height)
+}
+
+export const drawFinishText = (
+  ctx: CanvasRenderingContext2D,
+  a: number
+): void => {
+  const scale = a / finish.width
+  const width = finish.width * scale
+  const height = finish.height * scale
+  const x = 0
+  const y = a / 2 - height / 2
+  ctx.drawImage(finish, x, y, width, height)
 }

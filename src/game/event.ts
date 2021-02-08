@@ -26,7 +26,7 @@ const ReadyEvent: GameEvent = {
 
 const StartEvent: GameEvent = {
   id: 'START',
-  frameLength: 70,
+  frameLength: 90,
 }
 
 const FinishEvent: GameEvent = {
