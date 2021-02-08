@@ -2,11 +2,11 @@
 
 type ViewState = 'Top' | 'Game' | 'Result'
 
-type Props = {
+type CommonProps = {
   setViewState: React.Dispatch<React.SetStateAction<ViewState>>
 }
 
-type GameProps = Props & {
+type GameProps = CommonProps & {
   score?: number
   setScore: React.Dispatch<React.SetStateAction<number>>
 }

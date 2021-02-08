@@ -1,15 +1,22 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-import useGame from 'game/useGame'
+import { useGame } from 'game/useGame'
+import { useListener } from 'game/useListener'
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
   createStyles({
-    score: {
+    scoreText: {
+      color: theme.palette.primary.main,
       fontSize: 20,
-      marginBottom: 8,
-      textAlign: 'center',
+      fontWeight: 700,
+    },
+    score: {
+      color: theme.palette.primary.main,
+      fontSize: 28,
+      fontWeight: 700,
+      marginBottom: 2,
     },
   })
 )
@@ -23,41 +30,22 @@ export const Game: React.FC<GameProps> = ({
   const canvasRef = useRef(null)
   const [init, onMouse] = useGame({ setViewState, setScore })
   useLayoutEffect(() => {
-    document.addEventListener('keydown', onKey, false)
-    document.addEventListener('keyup', onKey, false)
-    document.addEventListener('touchstart', onTouch, false)
-    document.addEventListener('touchend', onTouch, false)
     const canvas = canvasRef.current
     canvas && init(canvas)
-    return () => {
-      document.removeEventListener('keydown', onKey, false)
-      document.removeEventListener('keyup', onKey, false)
-      document.removeEventListener('touchstart', onTouch, false)
-      document.removeEventListener('touchend', onTouch, false)
-    }
   }, [])
-
-  const onKey = (event: KeyboardEvent) => {
-    const isDown = event.type === 'keydown'
-    if (event.key === 'Left' || event.key === 'ArrowLeft')
-      onMouse('left', isDown)
-    else if (event.key === 'Right' || event.key === 'ArrowRight')
-      onMouse('right', isDown)
-    event.preventDefault()
-  }
-
-  const onTouch = (event: TouchEvent) => {
-    const isDown = event.type === 'touchstart'
-    const x = event.changedTouches.item(0)?.clientX
-    if (x && x <= document.body.clientWidth / 2) onMouse('left', isDown)
-    else onMouse('right', isDown)
-    event.preventDefault()
-  }
+  useListener({ onMouse })
 
   return (
     <div style={{ width: '100%' }}>
       <canvas ref={canvasRef} />
-      <Typography className={classes.score}>ゲットした数： {score}</Typography>
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item>
+          <Typography className={classes.scoreText}>受け止めた数： </Typography>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.score}>{score}</Typography>
+        </Grid>
+      </Grid>
     </div>
   )
 }

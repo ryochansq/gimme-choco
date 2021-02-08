@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react'
-import { Button, Typography } from '@material-ui/core'
+import React, { useLayoutEffect, useRef } from 'react'
+import { Button, Grid, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(() =>
+import { useDemo } from 'game/useDemo'
+import { useListener } from 'game/useListener'
+
+const useStyles = makeStyles((theme) =>
   createStyles({
-    button: {},
+    container: {
+      padding: 16,
+    },
+    hone: {
+      color: theme.palette.primary.main,
+      fontWeight: 700,
+    },
   })
 )
 
-type TopProps = Props & {
+type TopProps = CommonProps & {
   setScore: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -17,27 +26,60 @@ export const Top: React.FC<TopProps> = ({
   setScore,
 }: TopProps) => {
   const classes = useStyles()
+  const canvasRef = useRef(null)
+  const [init, onMouse] = useDemo()
+  useLayoutEffect(() => {
+    setScore(0)
+    const canvas = canvasRef.current
+    canvas && init(canvas)
+  }, [])
+  useListener({ onMouse })
 
-  useEffect(() => setScore(0), [])
-
-  // TODO: 説明をちゃんと書く
-  // TODO: スタートボタンに画像を付けて大きくする？
+  // TODO: 実際にお試しで動かせるもあちゃんを表示したり？
 
   return (
-    <div>
-      <Typography variant="body1" color="inherit">
-        MOAMETALを操作して、
-        <br />
-        チョコをたくさん受け止めよう！
-      </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setViewState('Game')}
-        className={classes.button}
-      >
-        スタート！
-      </Button>
-    </div>
+    <Grid container spacing={2} className={classes.container}>
+      <Grid item>
+        <Typography variant="body2" color="inherit">
+          もあちゃんを左右に動かして、上から降ってくるチョコのお菓子をできるだけたくさん受け止めよう！
+        </Typography>
+      </Grid>
+      <Grid container justify="center">
+        <canvas ref={canvasRef} />
+      </Grid>
+      <Grid item>
+        <Typography variant="body2" color="inherit">
+          パソコン：「←」「→」キーで左右に動く
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="body2" color="inherit">
+          スマホ：画面の左側のどこかをタッチしていると左に、右側だと右に動く
+        </Typography>
+        <Typography variant="caption" color="inherit">
+          （機種によってはタッチが速すぎると反応しないことがあります）
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="body2" color="inherit">
+          お菓子は全部で100コ。
+        </Typography>
+        <Typography variant="body2" color="inherit">
+          <span className={classes.hone}>
+            骨マスクを受け止めると集めたお菓子が減っちゃう
+          </span>
+          ので気をつけてね。
+        </Typography>
+      </Grid>
+      <Grid item container justify="center">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setViewState('Game')}
+        >
+          ゲームスタート！
+        </Button>
+      </Grid>
+    </Grid>
   )
 }

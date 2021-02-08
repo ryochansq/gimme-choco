@@ -29,7 +29,8 @@ export const drawMoa = (
   prevLane: Lane,
   a: number,
   moaStatus: MoaStatus | null,
-  moaTransition: MoaTransition | null
+  moaTransition: MoaTransition | null,
+  isDemo: boolean
 ): void => {
   const scale = (a / moa.width / 100) * MOA_SIZE
   const yScale = (() => {
@@ -40,7 +41,7 @@ export const drawMoa = (
     else return 0.9
   })()
   const nx = (() => {
-    const x0 = 29
+    const x0 = isDemo ? 35 : 29
     const interval = 50 - x0
     if (moaStatus?.id === 'DAMAGE') return 50
     else if (moaTransition) {
@@ -50,8 +51,9 @@ export const drawMoa = (
       return x0 + (interval * (from * frameLength + to * (3 - frameLength))) / 3
     } else return x0 + interval * prevLane
   })()
+  const ny = isDemo ? 0 : 65
   const x = (a / 100) * (nx - MOA_SIZE / 2)
-  const y = (a / 100) * 65 + moa.height * scale * (1 - yScale)
+  const y = (a / 100) * ny + moa.height * scale * (1 - yScale)
   const img = (() => {
     if (moaStatus?.id === 'DAMAGE') return moaDamaged
     else if (lane === 0) return moaLeft
@@ -154,4 +156,30 @@ export const drawFinishText = (
   const x = 0
   const y = a / 2 - height / 2
   ctx.drawImage(finish, x, y, width, height)
+}
+
+export const drawDemoChoco = (
+  ctx: CanvasRenderingContext2D,
+  a: number
+): void => {
+  const width = (a / 100) * CHOCO_SIZE
+  const x0 = (a / 100) * (11 - CHOCO_SIZE / 2)
+  const y0 = (a / 100) * 7
+  ctx.drawImage(chocoList[0], x0, y0, width, width)
+  const x1 = (a / 100) * (89 - CHOCO_SIZE / 2)
+  const y1 = (a / 100) * 7
+  ctx.drawImage(chocoList[1], x1, y1, width, width)
+  const x2 = (a / 100) * (89 - CHOCO_SIZE / 2)
+  const y2 = (a / 100) * (48 - CHOCO_SIZE)
+  ctx.drawImage(chocoList[2], x2, y2, width, width)
+  const x3 = (a / 100) * (11 - CHOCO_SIZE / 2)
+  const y3 = (a / 100) * (46 - CHOCO_SIZE)
+  ctx.drawImage(hone, x3, y3, width, width)
+  ctx.font = '12px sans-serif'
+  ctx.fillStyle = 'red'
+  const text = 'DANGER!!'
+  const measuredText1 = ctx.measureText(text)
+  const x4 = (a / 100) * 12 - measuredText1.width / 2
+  const y4 = (a / 100) * 46 + 14
+  ctx.fillText(text, x4, y4)
 }

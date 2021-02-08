@@ -24,7 +24,7 @@ function useValueRef<T>(
   return [ref, setV]
 }
 
-const useGame = ({
+export const useGame = ({
   setViewState,
   setScore,
 }: GameProps): [
@@ -66,7 +66,8 @@ const useGame = ({
       prevMoaLane.current,
       a.current,
       moaStatus.current,
-      moaTransition.current
+      moaTransition.current,
+      false
     )
     drawChocoList(ctx, a.current, chocoPointList)
     drawCount(ctx, a.current, count.current)
@@ -234,5 +235,3 @@ const useGame = ({
 
   return [init, onMove]
 }
-
-export default useGame
