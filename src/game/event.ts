@@ -36,7 +36,7 @@ const FinishEvent: GameEvent = {
 
 const IntervalEvent: GameEvent = {
   id: 'INTERVAL',
-  frameLength: 60,
+  frameLength: 40,
 }
 
 const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
@@ -70,7 +70,7 @@ const makeChocoEventList = (): GameEvent[] => {
   return res
 }
 
-function getRandomLane() {
+export const getRandomLane = (): Lane => {
   return Math.floor(Math.random() * Math.floor(3)) as Lane
 }
 

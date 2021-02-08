@@ -11,10 +11,6 @@ const useStyles = makeStyles(() =>
       marginBottom: 8,
       textAlign: 'center',
     },
-    button: {
-      fontSize: 32,
-      padding: '12px 16px 20px',
-    },
   })
 )
 
@@ -50,11 +46,8 @@ export const Game: React.FC<GameProps> = ({
     event.preventDefault()
   }
 
-  const [num, setNum] = React.useState(0)
-
   const onTouch = (event: TouchEvent) => {
     const isDown = event.type === 'touchstart'
-    setNum(event.changedTouches.length)
     const x = event.changedTouches.item(0)?.clientX
     if (x && x <= document.body.clientWidth / 2) onMouse('left', isDown)
     else onMouse('right', isDown)
@@ -65,7 +58,6 @@ export const Game: React.FC<GameProps> = ({
     <div style={{ width: '100%' }}>
       <canvas ref={canvasRef} />
       <Typography className={classes.score}>ゲットした数： {score}</Typography>
-      <Typography className={classes.score}>{num}</Typography>
     </div>
   )
 }

@@ -7,7 +7,7 @@ import {
   drawCount,
   calcCatchingList,
 } from 'game/draw'
-import { makeEventQueue } from 'game/event'
+import { makeEventQueue, getRandomLane } from 'game/event'
 
 const HEIGHT_RATE = 1.2
 
@@ -124,22 +124,24 @@ const useGame = ({
 
   const handleChocoEvent = (choco: Choco | undefined) => {
     if (!choco) return
-    const honeLane = getHoneLane(choco.lane)
-    if (honeLane === choco.lane)
-      setChocoList((currentList) => [...currentList, choco])
-    else
+    const randLane = getRandomLane()
+    const honeLane =
+      randLane === choco.lane ? (((randLane + 1) % 3) as Lane) : randLane
+    const adding = (() => {
+      const c = count.current
+      if (c === 0) return false
+      else if (c <= 30) return c % 6 === 0
+      else if (c <= 60) return c % 4 === 0
+      else return c % 6 === 1 || c % 6 === 3
+    })()
+    if (adding)
       setChocoList((currentList) => [
         ...currentList,
         choco,
         { isChoco: false, type: 0, lane: honeLane, frame: 0 },
       ])
+    else setChocoList((currentList) => [...currentList, choco])
     if (choco.isChoco) setCount((currentCount) => currentCount + 1)
-  }
-
-  const getHoneLane = (lane: Lane): Lane => {
-    const r = Math.floor(Math.random() * Math.floor(10))
-    if (r >= 3) return lane
-    else return r as Lane
   }
 
   const calcGettingPoint = (catchingList: boolean[]): number =>

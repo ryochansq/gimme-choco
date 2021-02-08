@@ -34,7 +34,7 @@ export const drawMoa = (
     else return 0.9
   })()
   const nx = (() => {
-    const x0 = 30
+    const x0 = 29
     const interval = 50 - x0
     if (moaStatus?.id === 'DAMAGE') return 50
     else if (moaTransition) {
@@ -83,7 +83,7 @@ export const isCatching = (
 ): boolean => {
   if (moaStatus?.id === 'DAMAGE') return false
   if (chocoLane !== moaLane) return false
-  return ny >= 85 && ny <= 92
+  return ny >= 86 && ny <= 92
 }
 
 export const drawChoco = (
