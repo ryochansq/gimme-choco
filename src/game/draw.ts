@@ -165,10 +165,10 @@ export const drawDemoChoco = (
   const width = (a / 100) * CHOCO_SIZE
   const x0 = (a / 100) * (11 - CHOCO_SIZE / 2)
   const y0 = (a / 100) * 7
-  ctx.drawImage(chocoList[0], x0, y0, width, width)
+  ctx.drawImage(chocoList[1], x0, y0, width, width)
   const x1 = (a / 100) * (89 - CHOCO_SIZE / 2)
   const y1 = (a / 100) * 7
-  ctx.drawImage(chocoList[1], x1, y1, width, width)
+  ctx.drawImage(chocoList[0], x1, y1, width, width)
   const x2 = (a / 100) * (89 - CHOCO_SIZE / 2)
   const y2 = (a / 100) * (48 - CHOCO_SIZE)
   ctx.drawImage(chocoList[2], x2, y2, width, width)

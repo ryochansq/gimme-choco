@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.primary.main,
       fontWeight: 700,
     },
+    button: {
+      fontWeight: 700,
+    },
   })
 )
 
@@ -74,6 +77,7 @@ export const Top: React.FC<TopProps> = ({
           variant="contained"
           color="primary"
           onClick={() => setViewState('Game')}
+          className={classes.button}
         >
           ゲームスタート！
         </Button>
