@@ -9,9 +9,6 @@ type ResultProps = CommonProps & {
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    container: {
-      padding: 16,
-    },
     img: {
       width: '100%',
     },
@@ -24,7 +21,7 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.primary.main,
       fontSize: 28,
       fontWeight: 700,
-      marginBottom: 2,
+      marginBottom: 3,
     },
     button: {
       color: 'white',
@@ -43,7 +40,7 @@ export const Result: React.FC<ResultProps> = ({
   const src = (() => {
     if (score < 50) return '/result1.png'
     else if (score < 80) return '/result2.png'
-    else return 'result3.png'
+    else return '/result3.jpg'
   })()
 
   const tweet = () => {
@@ -52,12 +49,7 @@ export const Result: React.FC<ResultProps> = ({
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
-      className={classes.container}
-      alignItems="center"
-    >
+    <Grid container spacing={2} alignItems="center">
       <Grid item>
         <img src={src} className={classes.img} />
       </Grid>

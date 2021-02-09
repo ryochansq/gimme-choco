@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   AppBar,
   Container,
@@ -7,7 +7,9 @@ import {
   Toolbar,
 } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { CSSTransition } from 'react-transition-group'
 
+import 'App.scss'
 import { Top } from 'pages/Top'
 import { Game } from 'pages/Game'
 import { Result } from 'pages/Result'
@@ -47,11 +49,19 @@ const useStyles = makeStyles(() =>
 )
 
 const App: React.FC = () => {
-  const [viewState, setViewState] = useState<ViewState>('Top')
+  const [viewState, setViewState] = useState<ViewState>('')
+  const [transitionState, setTransitionState] = useState<ViewState>('')
   const [score, setScore] = useState(0)
   const classes = useStyles()
+  const resultRef = useRef(null)
+  const gameRef = useRef(null)
+  const topRef = useRef(null)
 
-  // TODO: 各ページの切替時にフェードさせる
+  useEffect(() => setViewState('Top'), [])
+
+  useEffect(() => {
+    setTimeout(() => setTransitionState(viewState), 200)
+  }, [viewState])
 
   return (
     <div className={classes.root}>
@@ -62,22 +72,44 @@ const App: React.FC = () => {
           </Toolbar>
         </AppBar>
         <Container maxWidth="xs" className={classes.body}>
-          {(() => {
-            switch (viewState) {
-              case 'Result':
-                return <Result setViewState={setViewState} score={score} />
-              case 'Game':
-                return (
-                  <Game
-                    setViewState={setViewState}
-                    score={score}
-                    setScore={setScore}
-                  />
-                )
-              default:
-                return <Top setViewState={setViewState} setScore={setScore} />
-            }
-          })()}
+          <CSSTransition
+            nodeRef={resultRef}
+            in={transitionState === 'Result' && viewState === 'Result'}
+            timeout={{ enter: 800, exit: 200 }}
+            unmountOnExit
+            classNames="result"
+          >
+            <div ref={resultRef}>
+              <Result setViewState={setViewState} score={score} />
+            </div>
+          </CSSTransition>
+          <CSSTransition
+            nodeRef={gameRef}
+            in={transitionState === 'Game' && viewState === 'Game'}
+            timeout={200}
+            unmountOnExit
+            classNames="common"
+          >
+            <div ref={gameRef}>
+              <Game
+                setViewState={setViewState}
+                score={score}
+                setScore={setScore}
+              />
+            </div>
+          </CSSTransition>
+          <CSSTransition
+            nodeRef={topRef}
+            appear
+            in={transitionState === 'Top' && viewState === 'Top'}
+            timeout={200}
+            unmountOnExit
+            classNames="common"
+          >
+            <div ref={topRef}>
+              <Top setViewState={setViewState} setScore={setScore} />
+            </div>
+          </CSSTransition>
         </Container>
       </ThemeProvider>
     </div>

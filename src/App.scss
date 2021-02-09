@@ -1,0 +1,37 @@
+.common {
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 200ms ease;
+    }
+  }
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+  }
+}
+
+.result {
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 800ms ease;
+    }
+  }
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+  }
+}

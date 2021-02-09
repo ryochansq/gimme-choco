@@ -1,6 +1,6 @@
 /// <reference types="react-scripts" />
 
-type ViewState = 'Top' | 'Game' | 'Result'
+type ViewState = 'Top' | 'Game' | 'Result' | ''
 
 type CommonProps = {
   setViewState: React.Dispatch<React.SetStateAction<ViewState>>
