@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Link, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import TwitterIcon from '@material-ui/icons/Twitter'
 
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) =>
       textTransform: 'none',
       fontWeight: 700,
     },
+    credit: {
+      margin: 16,
+    },
   })
 )
 
@@ -44,8 +47,10 @@ export const Result: React.FC<ResultProps> = ({
   })()
 
   const tweet = () => {
-    console.info('tweet')
-    // TODO: ツイート処理
+    const text = `もあちゃんのギミチョコだいさくせん で\n 満腹度：${score} でした！\n\n#もあちゃんのギミチョコだいさくせん\n#BABYMETAL #さくら学院父兄パソコン部\n\nhttps://gimme-choco.ryochansq.vercel.app`
+    const encodedText = encodeURIComponent(text)
+    const intent = `https://twitter.com/intent/tweet?text=${encodedText}`
+    window.open(intent)
   }
 
   return (
@@ -89,6 +94,24 @@ export const Result: React.FC<ResultProps> = ({
           >
             Twitterで共有
           </Button>
+        </Grid>
+      </Grid>
+      <Grid item container className={classes.credit}>
+        <Grid item container justify="flex-end">
+          <Typography variant="caption">
+            絵：{' '}
+            <Link href="https://twitter.com/suke_ma_suke" target="_blank">
+              @suke_ma_suke
+            </Link>
+          </Typography>
+        </Grid>
+        <Grid item container justify="flex-end">
+          <Typography variant="caption">
+            開発：{' '}
+            <Link href="https://twitter.com/ryochan_metal" target="_blank">
+              @ryochan_metal
+            </Link>
+          </Typography>
         </Grid>
       </Grid>
     </Grid>
