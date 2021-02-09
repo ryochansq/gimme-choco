@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Link, Typography } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import { useDemo } from 'game/useDemo'
@@ -77,6 +77,24 @@ export const Top: React.FC<TopProps> = ({
         >
           ゲームスタート！
         </Button>
+      </Grid>
+      <Grid item container>
+        <Grid item container justify="flex-end">
+          <Typography variant="caption">
+            絵：{' '}
+            <Link href="https://twitter.com/suke_ma_suke" target="_blank">
+              @suke_ma_suke
+            </Link>
+          </Typography>
+        </Grid>
+        <Grid item container justify="flex-end">
+          <Typography variant="caption">
+            開発：{' '}
+            <Link href="https://twitter.com/ryochan_metal" target="_blank">
+              @ryochan_metal
+            </Link>
+          </Typography>
+        </Grid>
       </Grid>
     </Grid>
   )

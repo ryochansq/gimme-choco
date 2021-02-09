@@ -51,6 +51,8 @@ const App: React.FC = () => {
   const [score, setScore] = useState(0)
   const classes = useStyles()
 
+  // TODO: 各ページの切替時にフェードさせる
+
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
