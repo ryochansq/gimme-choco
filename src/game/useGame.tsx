@@ -123,7 +123,7 @@ export const useGame = ({
     const adding = (() => {
       if (count.current === 0) return false
       const len = eventQueue.current.length
-      if (len > 70) return len % 4 === 0
+      if (len > 70) return len % 5 === 0
       else if (len > 40) return len % 3 === 0
       else return len % 4 === 1 || len % 4 === 3
     })()

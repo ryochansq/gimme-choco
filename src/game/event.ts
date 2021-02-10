@@ -1,6 +1,6 @@
 const PLAN_LIST = [
   [2, 0],
-  [2, 1],
+  [2, 0],
   [3, 1],
   [5, 1],
   [5, 0],
@@ -36,13 +36,13 @@ const FinishEvent: GameEvent = {
 
 const IntervalEvent: GameEvent = {
   id: 'INTERVAL',
-  frameLength: 40,
+  frameLength: 35,
 }
 
 const makeChocoEvent = (isChoco: boolean, lane: Lane): GameEvent => {
   return {
     id: 'CHOCO',
-    frameLength: 9 + getRandomLane() * 2,
+    frameLength: 8 + getRandomLane() * 2,
     choco: {
       isChoco,
       type: getRandomLane(),
