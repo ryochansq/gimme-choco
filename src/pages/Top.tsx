@@ -39,7 +39,7 @@ export const Top: React.FC<TopProps> = ({
   useListener({ onMouse })
 
   return (
-    <Grid container spacing={2} className={classes.container}>
+    <Grid container spacing={1} className={classes.container}>
       <Grid item>
         <Typography variant="body2" color="inherit">
           もあちゃんを左右に動かして、上から降ってくるチョコのお菓子をできるだけたくさん受け止めよう！

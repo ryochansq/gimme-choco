@@ -121,11 +121,11 @@ export const useGame = ({
     const honeLane =
       randLane === choco.lane ? (((randLane + 1) % 3) as Lane) : randLane
     const adding = (() => {
-      const c = count.current
-      if (c === 0) return false
-      else if (c <= 30) return c % 6 === 0
-      else if (c <= 60) return c % 4 === 0
-      else return c % 6 === 1 || c % 6 === 3
+      if (count.current === 0) return false
+      const len = eventQueue.current.length
+      if (len > 70) return len % 4 === 0
+      else if (len > 40) return len % 3 === 0
+      else return len % 4 === 1 || len % 4 === 3
     })()
     if (adding)
       setChocoList((currentList) => [

@@ -41,7 +41,7 @@ export const Result: React.FC<ResultProps> = ({
   const classes = useStyles()
 
   const src = (() => {
-    if (score < 50) return '/result1.png'
+    if (score < 50) return '/result1.jpg'
     else if (score < 80) return '/result2.png'
     else return '/result3.jpg'
   })()
