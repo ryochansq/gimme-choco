@@ -41,9 +41,10 @@ export const Result: React.FC<ResultProps> = ({
   const classes = useStyles()
 
   const src = (() => {
-    if (score < 50) return '/result1.jpg'
-    else if (score < 80) return '/result2.jpg'
-    else return '/result3.jpg'
+    if (score >= 100) return '/result100.jpg'
+    else if (score >= 80) return '/result80.jpg'
+    else if (score >= 50) return '/result50.jpg'
+    else return '/result0.jpg'
   })()
 
   const tweet = () => {
@@ -65,13 +66,6 @@ export const Result: React.FC<ResultProps> = ({
         <Grid item>
           <Typography className={classes.score}>{score}</Typography>
         </Grid>
-        {score === 100 && (
-          <Grid item>
-            <Typography className={classes.scoreText}>
-              {'　'}パーフェクト！
-            </Typography>
-          </Grid>
-        )}
       </Grid>
       <Grid item container direction="row" justify="center" spacing={2}>
         <Grid item>
