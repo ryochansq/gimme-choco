@@ -53,6 +53,7 @@ export const Result: React.FC<ResultProps> = ({
     const intent = `https://twitter.com/intent/tweet?text=${encodedText}`
     window.open(intent)
   }
+
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item>
