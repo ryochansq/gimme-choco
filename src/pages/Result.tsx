@@ -48,7 +48,7 @@ export const Result: React.FC<ResultProps> = ({
   })()
 
   const tweet = () => {
-    const text = `もあちゃんのギミチョコだいさくせん で\n 満腹度：${score} でした！\n\n#もあちゃんのギミチョコだいさくせん\n#BABYMETAL #さくら学院父兄パソコン部\n\nhttps://gimme-choco.ryochansq.vercel.app`
+    const text = `もあちゃんのギミチョコだいさくせん で\n 満腹度：${score} でした！\n\ngimme-choco.ryochansq.vercel.app\n\n#もあちゃんのギミチョコだいさくせん\n#BABYMETAL #さくら学院父兄パソコン部`
     const encodedText = encodeURIComponent(text)
     const intent = `https://twitter.com/intent/tweet?text=${encodedText}`
     window.open(intent)
